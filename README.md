@@ -1,4 +1,4 @@
-# azul-project
+# Azul-project
                         +       +       +
                         |       |       |
                         |       |       |
@@ -11,5 +11,5 @@
                         |       |       |
                         +       +       +
 
-azul-project : Express yourself in amazigh through your browser
+**Azul-project** : Express yourself in [amazigh](https://en.wikipedia.org/wiki/Berbers) through your browser.
 
