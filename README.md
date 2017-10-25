@@ -1,17 +1,17 @@
 # Azul-project
-                        +       +       +
-                        |       |       |
-                        |       |       |
-                        +---------------+
-                                |
-                           Azul-Project
-                                |
-                        +---------------+
-                        |       |       |
-                        |       |       |
-                        +       +       +
+                                        +       +       +
+                                        |       |       |
+                                        |       |       |
+                                        +---------------+
+                                                |
+                                           Azul-Project
+                                                |
+                                        +---------------+
+                                        |       |       |
+                                        |       |       |
+                                        +       +       +
 
 ## TEASER 
-Express yourself in [amazigh](https://en.wikipedia.org/wiki/Berbers) through your browser.
+Express yourself in [Amazigh](https://en.wikipedia.org/wiki/Berbers)/[Tifinagh](https://fr.wikipedia.org/wiki/Tifinagh) through your browser.
 
 ## MORE TO COME SOON 
