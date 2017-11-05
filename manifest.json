@@ -1,37 +1,16 @@
 {
     "manifest_version": 2,
   
-    "name": "Amazigh Project",
+    "name": "Azul Project",
     "description": "An extension that allows you to write in Tifinagh from your browser without any pre-configuration.",
-    "version": "1.0",
+    "version": "0.1",
   
     "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "popup.html"
     },
     "permissions": [
-        // TODO Settle things down
         "activeTab",
         "storage"
-    ],
-    "icons": {
-        "16": "icons/icon16.png",
-        "48": "icons/icon48.png",
-        "128": "icons/icon128.png"
-      },
-      "default_locale": "en",
-      "background": {
-        "page": "src/bg/background.html",
-        "persistent": true
-      },
-      "content_scripts": [
-        {
-          "matches": [
-            "<all_urls>"
-          ],
-          "js": [
-            "src/inject/inject.js"
-          ]
-        }
-      ]
-  }
+    ]
+}
