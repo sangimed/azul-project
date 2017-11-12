@@ -2,7 +2,7 @@
     "version" : "1.0",
     "latin": [
         {
-            "_comment": "Γ, γ, Σ and ε ommited on this mapping are alternatives to some letters",
+            "_comment": "Γ, γ, Σ and ε ommited on this mapping are alternatives to some already mapped letters",
             "c=": "č",
             "C=": "Č",
             "d=": "ḍ",

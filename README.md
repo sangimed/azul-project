@@ -12,7 +12,7 @@
                                         +       +       +
 
 ## What is it ? 
-Express yourself in [Amazigh](https://en.wikipedia.org/wiki/Berbers)/[Tifinagh](https://fr.wikipedia.org/wiki/Tifinagh) through your browser.
+A helper to write [Amazigh](https://en.wikipedia.org/wiki/Berbers)/[Tifinagh](https://fr.wikipedia.org/wiki/Tifinagh) on Google Chrome.
 
 ## How to use it ? 
 Coming soon
