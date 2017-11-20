@@ -1,4 +1,6 @@
-/**
- * Eventlistener on focus on any textarea/text input type
- */
-document.onfocus()
+'use strict';
+
+// Once the DOM content is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    
+});
