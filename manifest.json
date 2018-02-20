@@ -4,14 +4,21 @@
     "name": "Azul Project",
     "description": "An extension that allows you to write in Tifinagh from your browser without any pre-configuration.",
     "version": "0.1",
-  
+
+    "content_scripts": [
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+          "js": ["content.js"]
+        }
+      ],
+    
     "browser_action": {
-        "default_icon": "icon.png",
-        "default_popup": "popup.html",
-        "default_title": "Azul Project"
+    "default_icon": "icon.png"
     },
-    "permissions": [
-        "activeTab",
-        "storage"
-    ]
+
+    "background": {
+        "scripts": ["background.js"]
+      }
 }
