@@ -10,7 +10,7 @@
           "matches": [
             "<all_urls>"
           ],
-          "js": ["content.js"]
+          "js": ["jquery-3.3.1.min.js", "content.js"]
         }
       ],
     
@@ -19,6 +19,6 @@
     },
 
     "background": {
-        "scripts": ["background.js"]
-      }
+      "scripts": ["background.js"]
+    }
 }
