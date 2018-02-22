@@ -10,15 +10,15 @@
           "matches": [
             "<all_urls>"
           ],
-          "js": ["jquery-3.3.1.min.js", "content.js"]
+          "js": ["libs/jquery-3.3.1.min.js", "src/content.js"]
         }
       ],
     
     "browser_action": {
-      "default_icon": "icon.png"
+      "default_icon": "assets/img/icon.png"
     },
 
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["src/background.js"]
     }
 }
