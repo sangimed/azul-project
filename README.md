@@ -19,7 +19,7 @@ Of course I do ! check it [here](https://trello.com/b/qPCjmttu/azul-project). Wa
 
 ## TODO's
 - [ ] Support iframe tags
-- [ ] 
+- [ ] Exclude some URLs (like settings pages)
 
 ## How to use it ? 
 Coming soon
