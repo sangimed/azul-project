@@ -1,4 +1,3 @@
-// content.js
 "use strict";
 
 // GLOBAL VARIABLES
@@ -9,7 +8,6 @@ var currentUID = -1;
 var customUIDCntr = 0;
 
 // FUNCTIONS
-
 document.addEventListener('keypress', (event) => {
     var currentChar = event.key;
 
