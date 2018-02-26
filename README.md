@@ -21,7 +21,8 @@ Of course I do ! check it [here](https://trello.com/b/qPCjmttu/azul-project). Wa
 - [ ] Support iframe tags
 - [ ] Exclude some URLs (like settings pages)
 - [ ] Handle backspaces
-- [ ] Migrate to an ES6 env ? (for a better refactoring) 
+- [ ] Migrate to an ES6 env ? (for a better refactoring)
+- [ ] Add an ON/OFF toggle shortcut
 
 ## How to use it ? 
 Coming soon
