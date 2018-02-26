@@ -1,40 +1,58 @@
 // content.js
 "use strict";
 
-// Globals
+// GLOBAL VARIABLES
 var previousChar = "";
 var currentElement = null;
-var customIDprefix = "uid_";
-var customIDCntr = 0;
+var currentUID = -1;
 
-// Functions
+var customUIDCntr = 0;
+
+// FUNCTIONS
+
 document.addEventListener('keypress', (event) => {
     var currentChar = event.key;
 
+    // Get the current DOM element.
     currentElement = document.activeElement;
 
-    // setting an UID to the active element if not already defined.
-    if (typeof currentElement.uid === 'undefined') {
-        setID(currentElement);
-    }
-
-    console.log("  tag name = " + currentElement.tagName + " uid = " + currentElement.uid);
     if ("INPUT" === currentElement.tagName || "TEXTAREA" === currentElement.tagName) {
-        if ("" !== previousChar) {
-            console.log('currentChar : ' + currentChar + '\npreviousChar : ' + previousChar);
-            // LOGIC HERE
-            previousChar = currentChar;
-        } else {
-            previousChar = currentChar;
-            console.log(' [ELSE] currentChar : ' + currentChar + '\npreviousChar : ' + previousChar);
+
+        // setting an UID to the active element if not already defined.
+        if (typeof currentElement.uid === 'undefined') {
+            setUID(currentElement);
+        }
+
+        currentUID = currentElement.uid;
+
+        console.log(" currentUID ===== " + currentUID);
+        console.log(" uid = " + currentElement.uid);
+        if (currentElement.uid === currentUID) {
+            console.log("currentElement.uid === currentUID PASSED...");
+            if ("" !== previousChar) {
+                console.log('currentChar : ' + currentChar + '\npreviousChar : ' + previousChar);
+                // LOGIC HERE
+                previousChar = currentChar;
+            } else {
+                previousChar = currentChar;
+                console.log(' [ELSE] currentChar : ' + currentChar + '\npreviousChar : ' + previousChar);
+            }
         }
     }
   });
 
-function getNextID() {
-    return customIDprefix + customIDCntr++;
+/**
+ * A function that increments the customUIDCntr.
+ * @return {number} the incremented customUIDCntr.
+ */
+function getNextUID() {
+    return customUIDCntr++;
 }
 
-function setID(elem) {
-    elem.uid = getNextID();
+/**
+ * A function that sets a unique identifier on a specified DOM element.
+ * @param {Element} the DOM element on which the uid will be set.
+ */
+function setUID(elem) {
+    elem.uid = getNextUID();
 }
