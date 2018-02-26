@@ -2,16 +2,19 @@
     "manifest_version": 2,
   
     "name": "Azul Project",
-    "description": "An extension that allows you to write in Tifinagh from your browser without any pre-configuration.",
+    "description": "An extension that allows you to write in latin amazigh and Tifinagh from your browser without any pre-configuration.",
     "version": "0.1",
-  
+
+    "content_scripts": [
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+          "js": ["libs/jquery-3.3.1.min.js", "src/content.js"]
+        }
+      ],
+    
     "browser_action": {
-        "default_icon": "icon.png",
-        "default_popup": "popup.html",
-        "default_title": "Azul Project"
-    },
-    "permissions": [
-        "activeTab",
-        "storage"
-    ]
+      "default_icon": "assets/img/icon.png"
+    }
 }
