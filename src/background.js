@@ -1,3 +1,0 @@
-// background.js
-"use strict";
-

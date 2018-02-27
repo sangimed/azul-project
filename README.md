@@ -18,11 +18,11 @@ A helper to write [Amazigh](https://en.wikipedia.org/wiki/Berbers)/[Tifinagh](ht
 Of course I do ! check it [here](https://trello.com/b/qPCjmttu/azul-project). Warning it's a bit ugly right now !
 
 ## TODO's
-- [ ] Support iframe tags
-- [ ] Exclude some URLs (like settings pages)
 - [ ] Handle backspaces
-- [ ] Migrate to an ES6 env ? (for a better refactoring)
+- [ ] Support iframe tags
 - [ ] Add an ON/OFF toggle shortcut
+- [x] Migrate to an ES6 env ? (yeoman/generator-chrome-extension)
+- [ ] Exclude some URLs (like settings pages)
 
 ## How to use it ? 
 Coming soon
