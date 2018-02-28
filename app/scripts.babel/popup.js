@@ -1,3 +1,3 @@
 'use strict';
 
-console.log('\'Allo \'Allo! Popup');
+document.getElementById("announcement").innerHTML = chrome.i18n.getMessage("popUpAnnouncement");
