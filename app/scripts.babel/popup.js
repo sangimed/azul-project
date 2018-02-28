@@ -1,3 +1,3 @@
 'use strict';
 
-document.getElementById("announcement").innerHTML = chrome.i18n.getMessage("popUpAnnouncement");
+document.getElementById('announcement').innerHTML = chrome.i18n.getMessage('popUpAnnouncement');

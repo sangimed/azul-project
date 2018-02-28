@@ -1,43 +1,54 @@
 'use strict';
 
-// GLOBAL VARIABLES
-var previousChar = '';
-var currentElement = null;
-var currentUID = -1;
+/**
+ * LOGIC :
+ * After each letter typed by the user do
+ *  IF (There is any previous char [pc] before the last one [lc]) do
+ *      IF (The two last chars [2l] math a key in the mapping file) do
+ *          - Replace 2l with its corresponding value
+ */
 
-var customUIDCntr = 0;
+const EDITABLE_TAGS = ['INPUT', 'TEXTAREA'];
 
-// FUNCTIONS
-document.addEventListener('keypress', (event) => {
-    var currentChar = event.key;
+document.addEventListener('keyup', (event) => {
 
     // Get the current DOM element.
-    currentElement = document.activeElement;
+    let currentElement = document.activeElement;
 
-    if ('INPUT' === currentElement.tagName || 'TEXTAREA' === currentElement.tagName) {
-
-        // setting an UID to the active element if not already defined.
-        if (typeof currentElement.uid === 'undefined') {
-            setUID(currentElement);
-        }
-
-        currentUID = currentElement.uid;
-
-        console.log(' currentUID ===== ' + currentUID);
-        console.log(' uid = ' + currentElement.uid);
-        if (currentElement.uid === currentUID) {
-            console.log('currentElement.uid === currentUID PASSED...');
-            if ('' !== previousChar) {
-                console.log('currentChar : ' + currentChar + '\npreviousChar : ' + previousChar);
-                // LOGIC HERE
-                previousChar = currentChar;
-            } else {
-                previousChar = currentChar;
-                console.log(' [ELSE] currentChar : ' + currentChar + '\npreviousChar : ' + previousChar);
-            }
+    if (EDITABLE_TAGS.includes(currentElement.tagName)) {
+        let caretPos = getCaretPosition(currentElement)
+        let word = returnWord(currentElement.value, caretPos);
+        if (word != null) {
+            console.log('WORD -> ', word);
         }
     }
-  });
+});
+
+function getCaretPosition(ctrl) {
+    let CaretPos = 0;   // IE Support
+    if (document.selection) {
+        ctrl.focus();
+        let Sel = document.selection.createRange();
+        Sel.moveStart('character', -ctrl.value.length);
+        CaretPos = Sel.text.length;
+    }
+    // Firefox support
+    else if (ctrl.selectionStart || ctrl.selectionStart == '0')
+    CaretPos = ctrl.selectionStart;
+    return (CaretPos);
+}
+
+function returnWord(text, caretPos) {
+    let index = text.indexOf(caretPos);
+    let preText = text.substring(0, caretPos);
+    if (preText.indexOf(' ') > 0) {
+        let words = preText.split(' ');
+        return words[words.length - 1]; //return last word
+    }
+    else {
+        return preText;
+    }
+}
 
 /**
  * A function that increments the customUIDCntr.
