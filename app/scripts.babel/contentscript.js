@@ -49,19 +49,3 @@ function returnWord(text, caretPos) {
         return preText;
     }
 }
-
-/**
- * A function that increments the customUIDCntr.
- * @return {number} the incremented customUIDCntr.
- */
-function getNextUID() {
-    return customUIDCntr++;
-}
-
-/**
- * A function that sets a unique identifier on a specified DOM element.
- * @param {Element} the DOM element on which the uid will be set.
- */
-function setUID(elem) {
-    elem.uid = getNextUID();
-}
