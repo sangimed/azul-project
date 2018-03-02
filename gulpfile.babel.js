@@ -4,6 +4,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
+import browserify from 'gulp-browserify';
 
 const $ = gulpLoadPlugins();
 
@@ -31,6 +32,9 @@ function lint(files, options) {
 gulp.task('lint', lint('app/scripts.babel/**/*.js', {
   env: {
     es6: true
+  },
+  parserOptions: {
+    sourceType: "module"
   }
 }));
 
@@ -90,6 +94,12 @@ gulp.task('babel', () => {
         presets: ['es2015']
       }))
       .pipe(gulp.dest('app/scripts'));
+});
+
+gulp.task('browserify', function() {
+  gulp.src('app/scripts/**/*.js', { read: false })
+      .pipe(browserify())
+      .pipe(gulp.dest('app/scripts'))
 });
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
