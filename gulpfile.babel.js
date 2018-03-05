@@ -4,7 +4,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
-import browserify from 'gulp-browserify';
+import bro from 'gulp-bro';
 
 const $ = gulpLoadPlugins();
 
@@ -93,13 +93,11 @@ gulp.task('babel', () => {
       .pipe($.babel({
         presets: ['es2015']
       }))
+      browserify({
+        entries: './app.js',
+        debug: true
+      })
       .pipe(gulp.dest('app/scripts'));
-});
-
-gulp.task('browserify', function() {
-  gulp.src('app/scripts/**/*.js', { read: false })
-      .pipe(browserify())
-      .pipe(gulp.dest('app/scripts'))
 });
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));

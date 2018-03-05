@@ -10,7 +10,7 @@
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-browserify": "^0.5.1",
+    "gulp-bro": "^1.0.3",
     "gulp-cache": "^0.4.3",
     "gulp-chrome-manifest": "0.0.13",
     "gulp-clean-css": "^2.0.3",
@@ -44,5 +44,9 @@
         "single"
       ]
     }
-  }
+  },
+  "dependencies": {
+    "browserify": "^16.1.0"
+  },
+  "optionalDependencies": {}
 }
