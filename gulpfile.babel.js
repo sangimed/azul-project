@@ -5,6 +5,7 @@ import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
 import bro from 'gulp-bro';
+import babelify from 'babelify';
 
 const $ = gulpLoadPlugins();
 
@@ -14,7 +15,7 @@ gulp.task('extras', () => {
     'app/_locales/**',
     '!app/scripts.babel',
     '!app/*.json',
-    '!app/*.html',
+    '!app/*.html',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
   ], {
     base: 'app',
     dot: true
@@ -90,13 +91,15 @@ gulp.task('chromeManifest', () => {
 
 gulp.task('babel', () => {
   return gulp.src('app/scripts.babel/**/*.js')
-      .pipe($.babel({
-        presets: ['es2015']
+      // .pipe($.babel({
+      //   presets: ['es2015']
+      // }))
+      .pipe(bro({
+        transform: [
+          babelify.configure({ presets: ['es2015'] }),
+          [ 'uglifyify', { global: true } ]
+        ]
       }))
-      browserify({
-        entries: './app.js',
-        debug: true
-      })
       .pipe(gulp.dest('app/scripts'));
 });
 

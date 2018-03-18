@@ -22,7 +22,7 @@ function getCaretPosition(ctrl) {
 
 /**
  * Gets gets the second last character relativly to the caret position.
- * Example : "Hello|" return "o", "He|llo" return H, 
+ * Example : "Hello|" return "l", "He|llo" return H, 
  * @param {number} caretPos - The caret position index.
  * @param {String} text - The text containing the word to be returned.  
  * @param {*} caretPos - The caret position.
