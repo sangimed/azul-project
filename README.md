@@ -18,7 +18,7 @@ A helper to write [Amazigh](https://en.wikipedia.org/wiki/Berbers)/[Tifinagh](ht
 Of course I do ! check it [here](https://trello.com/b/qPCjmttu/azul-project). Warning it's a bit ugly right now !
 
 ## TODO's
-- [ ] **Rewrite logic using cursor position instead of keypress event**
+- [x] **Rewrite logic using cursor position instead of keypress event**
 - [ ] Handle backspaces
 - [ ] Support iframe tags
 - [ ] Add an ON/OFF toggle shortcut
