@@ -1,15 +1,5 @@
 # Azul-project
-                                        +       +       +
-                                        |       |       |
-                                        |       |       |
-                                        +---------------+
-                                                |
-                                           Azul-Project
-                                                |
-                                        +---------------+
-                                        |       |       |
-                                        |       |       |
-                                        +       +       +
+![Logo](icon.png)
 
 ## What is it ? 
 A helper to write [Amazigh](https://en.wikipedia.org/wiki/Berbers)/[Tifinagh](https://fr.wikipedia.org/wiki/Tifinagh) on Google Chrome.
