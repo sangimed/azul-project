@@ -1,8 +1,21 @@
 // ----- contentscript.js -----
 'use strict';
 
-import {getCaretPosition, getBeforeLastChar, EDITABLE_TAGS} from './utils';
+import {
+    getCaretPosition, 
+    getBeforeLastChar, 
+    EDITABLE_TAGS,
+    loadJSON } from './utils';
 
+const MAPPING_FILE_PATH = '../app/data/letters_mapping.json';
+
+loadJSON(MAPPING_FILE_PATH, function(response) {
+    // Do Something with the response e.g.
+    jsonresponse = JSON.parse(response);
+    
+    // Assuming json data is wrapped in square brackets as Drew suggests
+    console.log(jsonresponse.version);
+});
 
 /**
  * LOGIC :
@@ -14,7 +27,7 @@ import {getCaretPosition, getBeforeLastChar, EDITABLE_TAGS} from './utils';
 
 document.addEventListener('keypress', (event) => {
     // Current character
-    let currentChar = event.key; 
+    let currentChar = event.key;
 
     // Get the current DOM element.
     let currentElement = document.activeElement;

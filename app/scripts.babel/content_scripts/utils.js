@@ -2,6 +2,8 @@
 
 // ----- utils.js -----
 
+// FUNCTIONS
+
 /**
  * Gets the caret position of a given DOM element.
  * @param {Element} ctrl - The DOM element on which the caret position is searched. 
@@ -52,10 +54,40 @@ function returnWord(text, caretPos) {
     }
 }
 
+/**
+ * Loads a local JSON file.
+ * @param filePath - The location of the file to be loaded.
+ * @param {*} callback - The callback function to be called after the requested file is opened. 
+ */
+function loadJSON(filePath, callback) {
+
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType('application/json');
+    xobj.open('GET', filePath, true);
+    xobj.onreadystatechange = function() {
+        if (xobj.readyState == 4 && xobj.status == 200) {
+            
+            // .open will NOT return a value but simply returns undefined in async mode so use a callback
+            callback(xobj.responseText);
+
+        }
+    }
+    xobj.send(null);
+
+}
+
+// CONSTANTS
+
+/**
+ * Defines the tags on which the extension will be triggered.
+ */
 const EDITABLE_TAGS = ['INPUT', 'TEXTAREA'];
+
+// EXPORTS
 
 export {
     getCaretPosition,
     getBeforeLastChar,
-    EDITABLE_TAGS
+    EDITABLE_TAGS,
+    loadJSON
 };
