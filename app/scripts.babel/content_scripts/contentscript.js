@@ -2,20 +2,11 @@
 'use strict';
 
 import {
-    getCaretPosition, 
-    getBeforeLastChar, 
+    getCaretPosition,
+    getBeforeLastChar,
     EDITABLE_TAGS,
-    loadJSON } from './utils';
-
-const MAPPING_FILE_PATH = '../app/data/letters_mapping.json';
-
-loadJSON(MAPPING_FILE_PATH, function(response) {
-    // Do Something with the response e.g.
-    jsonresponse = JSON.parse(response);
-    
-    // Assuming json data is wrapped in square brackets as Drew suggests
-    console.log(jsonresponse.version);
-});
+    LETTERS_MAPPING
+} from './utils';
 
 /**
  * LOGIC :
@@ -35,9 +26,12 @@ document.addEventListener('keypress', (event) => {
     if (EDITABLE_TAGS.includes(currentElement.tagName) && currentChar !== ' ') {
         let caretPos = getCaretPosition(currentElement)
         let beforeLastChar = getBeforeLastChar(currentElement.value, caretPos);
-        if (beforeLastChar != null) {
+        if (beforeLastChar != null && beforeLastChar !== ' ') {
             console.log('beforeLastChar -> ' + '[' + beforeLastChar + ']');
             console.log('currentChar -> ', currentChar);
+            console.log('RESULT: ' + beforeLastChar + currentChar);
+            let charCombination = beforeLastChar + currentChar;
+            
         }
     }
 });

@@ -2,6 +2,15 @@
 
 // ----- utils.js -----
 
+// CONSTANTS
+
+/**
+ * Defines the tags on which the extension will be triggered.
+ */
+const EDITABLE_TAGS = ['INPUT', 'TEXTAREA'];
+
+const LETTERS_MAPPING = require('../../data/letters_mapping.json');
+
 // FUNCTIONS
 
 /**
@@ -76,18 +85,11 @@ function loadJSON(filePath, callback) {
 
 }
 
-// CONSTANTS
-
-/**
- * Defines the tags on which the extension will be triggered.
- */
-const EDITABLE_TAGS = ['INPUT', 'TEXTAREA'];
-
 // EXPORTS
 
 export {
     getCaretPosition,
     getBeforeLastChar,
     EDITABLE_TAGS,
-    loadJSON
+    LETTERS_MAPPING
 };
