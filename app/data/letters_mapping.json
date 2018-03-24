@@ -1,7 +1,8 @@
 {
 	"version": "1.0",
+
+	"_comment": "Γ, γ, Σ and ε ommited on this mapping are alternatives to some letters",
 	"latin": {
-		"_comment": "Γ, γ, Σ and ε ommited on this mapping are alternatives to some letters",
 		"c=": "č",
 		"C=": "Č",
 		"d=": "ḍ",
@@ -26,7 +27,8 @@
 		"z=": "ẓ",
 		"Z=": "Ẓ"
 	},
+
+	"_comment_2": "Coming on a future release hopefully",
 	"tifinagh": {
-		"_comment": "Coming on a future release hopefully"
 	}
 }

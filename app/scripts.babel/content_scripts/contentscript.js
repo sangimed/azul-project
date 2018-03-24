@@ -4,6 +4,8 @@
 import {
     getCaretPosition,
     getBeforeLastChar,
+    insertMappingValue,
+    isEditable,
     EDITABLE_TAGS,
     LETTERS_MAPPING
 } from './utils';
@@ -17,21 +19,39 @@ import {
  */
 
 document.addEventListener('keypress', (event) => {
-    // Current character
+
+    // Current character.
     let currentChar = event.key;
 
     // Get the current DOM element.
     let currentElement = document.activeElement;
+    console.log('isEditable(currentElement)' + isEditable(currentElement));
+    console.log('currentElement : ' + currentElement);
 
-    if (EDITABLE_TAGS.includes(currentElement.tagName) && currentChar !== ' ') {
+    if (isEditable(currentElement) && currentChar !== ' ') {
+        console.log('TEEEEEEEEEST');
         let caretPos = getCaretPosition(currentElement)
         let beforeLastChar = getBeforeLastChar(currentElement.value, caretPos);
         if (beforeLastChar != null && beforeLastChar !== ' ') {
-            console.log('beforeLastChar -> ' + '[' + beforeLastChar + ']');
-            console.log('currentChar -> ', currentChar);
-            console.log('RESULT: ' + beforeLastChar + currentChar);
+            
             let charCombination = beforeLastChar + currentChar;
             
+            if (LETTERS_MAPPING.latin.hasOwnProperty(charCombination)) {
+                try {
+                    insertMappingValue(currentElement, charCombination)
+                } catch(error) {
+                    console.log(error);
+                }
+
+                /**
+                 * This will prevent from inserting the latest character typed after the mapped character.
+                 * 
+                 * Example :    Suppose we have "amazig" in a text field and we type "h".
+                 *              Without preventDefault() we would have had "amaziɣh" instead of "amaziɣ" 
+                 * 
+                 */
+                event.preventDefault();
+            }
         }
     }
 });
