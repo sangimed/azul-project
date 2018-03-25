@@ -31,7 +31,7 @@ document.addEventListener('keypress', (event) => {
     if (isEditable(currentElement) && currentChar !== ' ') {
         console.log('TEEEEEEEEEST');
         let caretPos = getCaretPosition(currentElement)
-        let beforeLastChar = getBeforeLastChar(currentElement.value, caretPos);
+        let beforeLastChar = getBeforeLastChar(currentElement.innerHTML, caretPos);
         if (beforeLastChar != null && beforeLastChar !== ' ') {
             
             let charCombination = beforeLastChar + currentChar;

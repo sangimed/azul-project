@@ -13,6 +13,20 @@ const LETTERS_MAPPING = require('../../data/letters_mapping.json');
 
 // FUNCTIONS
 
+/****** BEGIN EXPERIMENTING ******/
+
+// function getCaretPosition() {
+//     if (window.getSelection && window.getSelection().getRangeAt) {
+//       var range = window.getSelection().getRangeAt(0);
+//       var rangeCount = 0;
+//       return range.startOffset + rangeCount;
+//     }
+//     return -1;
+// }
+
+/****** END EXPERIMENTING ******/
+
+
 /**
  * Gets the caret position of a given DOM element.
  * @param {Element} ctrl - The DOM element on which the caret position is searched. 
