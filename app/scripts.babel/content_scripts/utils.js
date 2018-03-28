@@ -13,39 +13,52 @@ const LETTERS_MAPPING = require('../../data/letters_mapping.json');
 
 // FUNCTIONS
 
-/****** BEGIN EXPERIMENTING ******/
+/*************** EXPERIMENT BEGIN ***************/
 
-// function getCaretPosition() {
-//     if (window.getSelection && window.getSelection().getRangeAt) {
-//       var range = window.getSelection().getRangeAt(0);
-//       var rangeCount = 0;
-//       return range.startOffset + rangeCount;
-//     }
-//     return -1;
-// }
+// contenteditable version
+function getCaretPosition() {
+    if (window.getSelection && window.getSelection().getRangeAt) {
+      var range = window.getSelection().getRangeAt(0);
+      var rangeCount = 0;
+      return range.startOffset + rangeCount;
+    }
+    return -1;
+}
 
-/****** END EXPERIMENTING ******/
+// contenteditable version
+function insertMappingValue(obj, charCombination) {
+    if (isElement(obj) && typeof charCombination === 'string') {
+        obj.innerText = obj.innerText.substring(0, obj.innerText.length - 1);
+        obj.innerText = obj.innerText + LETTERS_MAPPING.latin[charCombination];
+        setEndOfContenteditable(obj);
+    } else {
+        throw 'Bad parameter(s).';
+    }
+                
+}
+/*************** EXPERIMENT end ***************/
 
 
+// TODO : Check if it's form tag or a contenteditable tag
 /**
  * Gets the caret position of a given DOM element.
  * @param {Element} ctrl - The DOM element on which the caret position is searched. 
  */
-function getCaretPosition(ctrl) {
-    let caretPos = 0;
-    if (document.selection) {
-        ctrl.focus();
-        let sel = document.selection.createRange();
-        sel.moveStart('character', -ctrl.value.length);
-        caretPos = sel.text.length;
-    }
-    // Firefox support
-    else if (ctrl.selectionStart || ctrl.selectionStart == '0') {
-        caretPos = ctrl.selectionStart;
-    }
+// function getCaretPosition(ctrl) {
+//     let caretPos = 0;
+//     if (document.selection) {
+//         ctrl.focus();
+//         let sel = document.selection.createRange();
+//         sel.moveStart('character', -ctrl.value.length);
+//         caretPos = sel.text.length;
+//     }
+//     // Firefox support
+//     else if (ctrl.selectionStart || ctrl.selectionStart == '0') {
+//         caretPos = ctrl.selectionStart;
+//     }
 
-    return (caretPos);
-}
+//     return (caretPos);
+// }
 
 /**
  * Gets gets the second last character relativly to the caret position.
@@ -104,15 +117,15 @@ function loadJSON(filePath, callback) {
  * @param {Element} obj - The element on which the character will be inserted.
  * @param {String} charCombination - The combination of characters that will be (or not) match a character.
  */
-function insertMappingValue(obj, charCombination) {
-    if (isElement(obj) && typeof charCombination === 'string') {
-        obj.value = obj.value.substring(0, obj.value.length - 1);
-        obj.value = obj.value + LETTERS_MAPPING.latin[charCombination];
-    } else {
-        throw 'Bad parameter(s).';
-    }
+// function insertMappingValue(obj, charCombination) {
+//     if (isElement(obj) && typeof charCombination === 'string') {
+//         obj.value = obj.value.substring(0, obj.value.length - 1);
+//         obj.value = obj.value + LETTERS_MAPPING.latin[charCombination];
+//     } else {
+//         throw 'Bad parameter(s).';
+//     }
                 
-}
+// }
 
 
 /**
@@ -130,6 +143,32 @@ function isEditable(obj) {
         return EDITABLE_TAGS.includes(obj.tagName) || obj.isContentEditable;
     } else {
         throw 'The parameter passed is not an Element.';
+    }
+}
+
+/**
+ * Sets the caret position to the end of a contenteditable element. 
+ * From https://stackoverflow.com/a/3866442/2300596.
+ * @param {Element} contentEditableElement - an element with the contenteditable global attribute set to true.  
+ */
+function setEndOfContenteditable(contentEditableElement)
+{
+    var range,selection;
+    if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
+    {
+        range = document.createRange();//Create a range (a range is a like the selection but invisible)
+        range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        selection = window.getSelection();//get the selection object (allows you to change selection)
+        selection.removeAllRanges();//remove any selections already made
+        selection.addRange(range);//make the range you have just created the visible selection
+    }
+    else if(document.selection)//IE 8 and lower
+    { 
+        range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+        range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        range.select();//Select the range (make it the visible selection
     }
 }
 

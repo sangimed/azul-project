@@ -1,6 +1,6 @@
 {
 	"version": "1.0",
-
+	
 	"_comment": "Γ, γ, Σ and ε ommited on this mapping are alternatives to some letters",
 	"latin": {
 		"c=": "č",
