@@ -19,7 +19,6 @@ import {
  */
 
 document.addEventListener('keypress', (event) => {
-
     // Current character.
     let currentChar = event.key;
     console.log('currentChar  ' + currentChar);
@@ -30,17 +29,18 @@ document.addEventListener('keypress', (event) => {
     console.log('currentElement : ' + currentElement);
     console.log('currentElement.innerText --> ' + currentElement.innerText)
     if (isEditable(currentElement) && currentChar !== ' ') {
-        let caretPos = getCaretPosition(currentElement)
-        console.log('caretPos  ' + caretPos);
-        
+
+        let caretPos = getCaretPosition(currentElement)        
         let beforeLastChar = getBeforeLastChar(currentElement.innerText, caretPos);
         console.log('beforeLastChar : ' + beforeLastChar);
+        console.log('currentChar : ' + currentChar);
         if (beforeLastChar != null && beforeLastChar !== ' ') {
             
             let charCombination = beforeLastChar + currentChar;
             
             console.log('TEEEEEEEEEST3 --- charCombination = ' + charCombination);
             if (LETTERS_MAPPING.latin.hasOwnProperty(charCombination)) {
+                console.log('passe ???');
                 try {
                     insertMappingValue(currentElement, charCombination)
                 } catch(error) {
@@ -51,8 +51,7 @@ document.addEventListener('keypress', (event) => {
                  * This will prevent from inserting the latest character typed after the mapped characters.
                  * 
                  * Example :    Suppose we have "amazig" in a text field and we type "h".
-                 *              Without preventDefault() we would have had "amaziɣh" instead of "amaziɣ" 
-                 * 
+                 *              Without preventDefault() we would have had "amaziɣh" instead of "amaziɣ"
                  */
                 event.preventDefault();
             }
