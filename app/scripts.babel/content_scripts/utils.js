@@ -121,10 +121,7 @@ function insertMappingValue(obj, charCombination) {
     if (isElement(obj) && typeof charCombination === 'string') {
         obj.value = obj.value.substring(0, obj.value.length - 1);
         obj.value = obj.value + LETTERS_MAPPING.latin[charCombination];
-    } else {
-        throw 'Bad parameter(s).';
-    }
-                
+    }           
 }
 
 
@@ -174,15 +171,23 @@ function setEndOfContenteditable(contentEditableElement)
 
 /**
  * 
- * @param {Element} obj - An DIV element that eventually wraps other elements.
- * @returns The deepest element if it exists, false otherwise.  
+ * @param {Element} elem 
  */
-function getDeepestElement(obj) {
-    if (isElement(obj) && obj.childElementCount === 1) {
-        
-    } else {
-        return false;
+function findDeepest(elem) {
+    var result = {maxDepth: 0, deepestElem: null}
+    descend(elem, 0, result);
+    if (result.maxDepth > 0)
+        console.log(result.deepestElem.tagName + '.' + result.maxDepth + '.' + result.deepestElem.innerText);
+}
+   
+   
+function descend(elem, depth, result) {    
+    if (depth > result.maxDepth) {
+    result.maxDepth = depth;
+    result.deepestElem = elem;
     }
+    for (var i=0; i<elem.childNodes.length; i++)
+        descend(elem.childNodes[i], depth + 1, result);
 }
 
 // EXPORTS
@@ -192,6 +197,7 @@ export {
     getBeforeLastChar,
     insertMappingValue,
     isEditable,
+    findDeepest,
     EDITABLE_TAGS,
     LETTERS_MAPPING
 };

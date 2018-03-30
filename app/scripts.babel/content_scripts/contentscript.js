@@ -6,6 +6,7 @@ import {
     getBeforeLastChar,
     insertMappingValue,
     isEditable,
+    findDeepest,
     EDITABLE_TAGS,
     LETTERS_MAPPING
 } from './utils';
@@ -25,10 +26,13 @@ document.addEventListener('keypress', (event) => {
 
     // Get the current DOM element.
     let currentElement = document.activeElement;
+
     console.log('isEditable(currentElement) ' + isEditable(currentElement));
     console.log('currentElement : ' + currentElement);
     console.log('currentElement.innerText --> ' + currentElement.innerText)
     if (isEditable(currentElement) && currentChar !== ' ') {
+        console.log('begin deepshit');
+        currentElement = findDeepest(currentElement);
 
         let caretPos = getCaretPosition(currentElement)        
         let beforeLastChar = getBeforeLastChar(currentElement.innerText, caretPos);
