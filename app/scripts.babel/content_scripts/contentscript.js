@@ -22,34 +22,21 @@ import {
 document.addEventListener('keypress', (event) => {
     // Current character.
     let currentChar = event.key;
-    console.log('currentChar  ' + currentChar);
 
     // Get the current DOM element.
     let currentElement = document.activeElement;
 
-    console.log('isEditable(currentElement) ' + isEditable(currentElement));
-    console.log('currentElement : ' + currentElement);
-    console.log('currentElement.innerText --> ' + currentElement.innerText)
-    if (isEditable(currentElement) && currentChar !== ' ') {
-        console.log('begin deepshit');
-        currentElement = findDeepest(currentElement);
+    if ((isEditable(currentElement) || currentElement.isContentEditable) && currentChar !== ' ') {
 
         let caretPos = getCaretPosition(currentElement)        
-        let beforeLastChar = getBeforeLastChar(currentElement.innerText, caretPos);
-        console.log('beforeLastChar : ' + beforeLastChar);
-        console.log('currentChar : ' + currentChar);
+        let beforeLastChar = getBeforeLastChar(currentElement.value, caretPos);
         if (beforeLastChar != null && beforeLastChar !== ' ') {
             
             let charCombination = beforeLastChar + currentChar;
             
-            console.log('TEEEEEEEEEST3 --- charCombination = ' + charCombination);
             if (LETTERS_MAPPING.latin.hasOwnProperty(charCombination)) {
-                console.log('passe ???');
-                try {
-                    insertMappingValue(currentElement, charCombination)
-                } catch(error) {
-                    console.log('ERROR : ' + error);
-                }
+
+                insertMappingValue(currentElement, charCombination)
 
                 /**
                  * This will prevent from inserting the latest character typed after the mapped characters.
