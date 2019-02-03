@@ -1,5 +1,3 @@
-# Project idle ! Need an experienced ES2015 developer for some help ! Contact me if interested :-)
-
 # Azul-project
 ![Logo](icon.png)
 
