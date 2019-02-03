@@ -21,8 +21,3 @@ Coming soon
 ## References
  - http://www.lexilogos.com/clavier/tamazight_latin.htm
  - http://www.lexilogos.com/clavier/tamazight.htm
-
-## Support on Beerpay
-Hey you! Help me out for a couple of :coffee: !
-
-[![Beerpay](https://beerpay.io/sangimed/azul-project/badge.svg?style=beer-square)](https://beerpay.io/sangimed/azul-project)  [![Beerpay](https://beerpay.io/sangimed/azul-project/make-wish.svg?style=flat-square)](https://beerpay.io/sangimed/azul-project?focus=wish)
