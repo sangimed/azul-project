@@ -1,3 +1,4 @@
+# Project on hold (thinking of doing a cross browser extension with https://github.com/EmailThis/extension-boilerplate as a boilerplate)
 # Azul-project
 ![Logo](icon.png)
 
