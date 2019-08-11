@@ -1,151 +1,162 @@
-// generated on 2018-02-27 using generator-chrome-extension 0.7.0
+import fs from "fs";
 import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import del from 'del';
-import runSequence from 'run-sequence';
-import {stream as wiredep} from 'wiredep';
-import bro from 'gulp-bro';
-import babelify from 'babelify';
+import {merge} from 'event-stream'
+import browserify from 'browserify';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
+import preprocessify from 'preprocessify';
+import gulpif from "gulp-if";
 
-const $ = gulpLoadPlugins();
+const $ = require('gulp-load-plugins')();
 
-gulp.task('extras', () => {
-  return gulp.src([
-    'app/*.*',
-    'app/_locales/**',
-    '!app/scripts.babel',
-    '!app/*.json',
-    '!app/*.html',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-  ], {
-    base: 'app',
-    dot: true
-  }).pipe(gulp.dest('dist'));
-});
+var production = process.env.NODE_ENV === "production";
+var target = process.env.TARGET || "chrome";
+var environment = process.env.NODE_ENV || "development";
 
-function lint(files, options) {
-  return () => {
-    return gulp.src(files)
-      .pipe($.eslint(options))
-      .pipe($.eslint.format());
-  };
-}
+var generic = JSON.parse(fs.readFileSync(`./config/${environment}.json`));
+var specific = JSON.parse(fs.readFileSync(`./config/${target}.json`));
+var context = Object.assign({}, generic, specific);
 
-gulp.task('lint', lint('app/scripts.babel/**/*.js', {
-  env: {
-    es6: true
+var manifest = {
+  dev: {
+    "background": {
+      "scripts": [
+        "scripts/livereload.js",
+        "scripts/background.js"
+      ]
+    }
   },
-  parserOptions: {
-    sourceType: "module"
-  }
-}));
 
-gulp.task('images', () => {
-  return gulp.src('app/images/**/*')
-    .pipe($.if($.if.isFile, $.cache($.imagemin({
-      progressive: true,
-      interlaced: true,
-      // don't remove IDs from SVGs, they are often used
-      // as hooks for embedding and styling
-      svgoPlugins: [{cleanupIDs: false}]
-    }))
-    .on('error', function (err) {
-      console.log(err);
-      this.end();
-    })))
-    .pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('html',  () => {
-  return gulp.src('app/*.html')
-    .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
-    .pipe($.sourcemaps.init())
-    .pipe($.if('*.js', $.uglify()))
-    .pipe($.if('*.css', $.cleanCss({compatibility: '*'})))
-    .pipe($.sourcemaps.write())
-    .pipe($.if('*.html', $.htmlmin({
-      collapseWhitespace: true,
-      minifyCSS: true,
-      minifyJS: true,
-      removeComments: true
-    })))
-    .pipe(gulp.dest('dist'));
-});
-
-gulp.task('chromeManifest', () => {
-  return gulp.src('app/manifest.json')
-    .pipe($.chromeManifest({
-      buildnumber: true,
-      background: {
-        target: 'scripts/background.js',
-        exclude: [
-          'scripts/chromereload.js'
-        ]
+  firefox: {
+    "applications": {
+      "gecko": {
+        "id": "my-app-id@mozilla.org"
       }
-  }))
-  .pipe($.if('*.css', $.cleanCss({compatibility: '*'})))
-  .pipe($.if('*.js', $.sourcemaps.init()))
-  .pipe($.if('*.js', $.uglify()))
-  .pipe($.if('*.js', $.sourcemaps.write('.')))
-  .pipe(gulp.dest('dist'));
-});
+    }
+  }
+};
 
-gulp.task('babel', () => {
-  return gulp.src('app/scripts.babel/**/*.js')
-      // .pipe($.babel({
-      //   presets: ['es2015']
-      // }))
-      .pipe(bro({
-        transform: [
-          babelify.configure({ presets: ['es2015'] }),
-          [ 'uglifyify', { global: true } ]
-        ]
-      }))
-      .pipe(gulp.dest('app/scripts'));
-});
-
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
-
-gulp.task('watch', ['lint', 'babel'], () => {
-  $.livereload.listen();
-
-  gulp.watch([
-    'app/*.html',
-    'app/scripts/**/*.js',
-    'app/images/**/*',
-    'app/styles/**/*',
-    'app/_locales/**/*.json'
-  ]).on('change', $.livereload.reload);
-
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
-  gulp.watch('bower.json', ['wiredep']);
-});
-
-gulp.task('size', () => {
-  return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
-});
-
-gulp.task('wiredep', () => {
-  gulp.src('app/*.html')
-    .pipe(wiredep({
-      ignorePath: /^(\.\.\/)*\.\./
-    }))
-    .pipe(gulp.dest('app'));
-});
-
-gulp.task('package', function () {
-  var manifest = require('./dist/manifest.json');
-  return gulp.src('dist/**')
-      .pipe($.zip('azul project-' + manifest.version + '.zip'))
-      .pipe(gulp.dest('package'));
+// Tasks
+gulp.task('clean', () => {
+  return pipe(`./build/${target}`, $.clean())
 });
 
 gulp.task('build', (cb) => {
-  runSequence(
-    'lint', 'babel', 'chromeManifest',
-    ['html', 'images', 'extras'],
-    'size', cb);
+  $.runSequence('clean', 'styles', 'ext', cb)
 });
 
-gulp.task('default', ['clean'], cb => {
-  runSequence('build', cb);
+gulp.task('watch', ['build'], () => {
+  $.livereload.listen();
+
+  gulp.watch(['./src/**/*']).on("change", () => {
+    $.runSequence('build', $.livereload.reload);
+  });
 });
+
+gulp.task('default', ['build']);
+
+gulp.task('ext', ['manifest', 'js'], () => {
+  return mergeAll(target)
+});
+
+
+// -----------------
+// COMMON
+// -----------------
+gulp.task('js', () => {
+  return buildJS(target)
+});
+
+gulp.task('styles', () => {
+  return gulp.src('src/styles/**/*.scss')
+    .pipe($.plumber())
+    .pipe($.sass.sync({
+      outputStyle: 'expanded',
+      precision: 10,
+      includePaths: ['.']
+    }).on('error', $.sass.logError))
+    .pipe(gulp.dest(`build/${target}/styles`));
+});
+
+gulp.task("manifest", () => {
+  return gulp.src('./manifest.json')
+    .pipe(gulpif(!production, $.mergeJson({
+      fileName: "manifest.json",
+      jsonSpace: " ".repeat(4),
+      endObj: manifest.dev
+    })))
+    .pipe(gulpif(target === "firefox", $.mergeJson({
+      fileName: "manifest.json",
+      jsonSpace: " ".repeat(4),
+      endObj: manifest.firefox
+    })))
+    .pipe(gulp.dest(`./build/${target}`))
+});
+
+
+
+// -----------------
+// DIST
+// -----------------
+gulp.task('dist', (cb) => {
+  $.runSequence('build', 'zip', cb)
+});
+
+gulp.task('zip', () => {
+  return pipe(`./build/${target}/**/*`, $.zip(`${target}.zip`), './dist')
+});
+
+
+// Helpers
+function pipe(src, ...transforms) {
+  return transforms.reduce((stream, transform) => {
+    const isDest = typeof transform === 'string'
+    return stream.pipe(isDest ? gulp.dest(transform) : transform)
+  }, gulp.src(src))
+}
+
+function mergeAll(dest) {
+  return merge(
+    pipe('./src/icons/**/*', `./build/${dest}/icons`),
+    pipe(['./src/_locales/**/*'], `./build/${dest}/_locales`),
+    pipe([`./src/images/${target}/**/*`], `./build/${dest}/images`),
+    pipe(['./src/images/shared/**/*'], `./build/${dest}/images`),
+    pipe(['./src/**/*.html'], `./build/${dest}`)
+  )
+}
+
+function buildJS(target) {
+  const files = [
+    'background.js',
+    'contentscript.js',
+    'options.js',
+    'popup.js',
+    'livereload.js'
+  ];
+
+  let tasks = files.map( file => {
+    return browserify({
+      entries: 'src/scripts/' + file,
+      debug: true
+    })
+    .transform('babelify', { presets: ['es2015'] })
+    .transform(preprocessify, {
+      includeExtensions: ['.js'],
+      context: context
+    })
+    .bundle()
+    .pipe(source(file))
+    .pipe(buffer())
+    .pipe(gulpif(!production, $.sourcemaps.init({ loadMaps: true }) ))
+    .pipe(gulpif(!production, $.sourcemaps.write('./') ))
+    .pipe(gulpif(production, $.uglify({ 
+      "mangle": false,
+      "output": {
+        "ascii_only": true
+      } 
+    })))
+    .pipe(gulp.dest(`build/${target}/scripts`));
+  });
+
+  return merge.apply(null, tasks);
+}

@@ -3,10 +3,6 @@ temp
 .tmp
 dist
 .sass-cache
-app/bower_components
-test/bower_components
-package
-app/scripts
-.vscode
-.idea/
+.DS_Store
+build
 npm-debug.log
