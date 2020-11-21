@@ -30,7 +30,7 @@ document.addEventListener('keypress', (event) => {
 
         let caretPos = getCaretPosition(currentElement)        
         let beforeLastChar = getBeforeLastChar(currentElement.value, caretPos);
-        if (beforeLastChar != null && beforeLastChar !== ' ') {
+        if (beforeLastChar != null && beforeLastChar !== ' ' /* FIXME : test any other blank character ! */ ) {
             
             let charCombination = beforeLastChar + currentChar;
             
