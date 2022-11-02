@@ -9,7 +9,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^8.0.0",
     "del": "^2.2.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-babel": "^6.1.2",
     "gulp-bro": "^1.0.3",
     "gulp-cache": "^0.4.3",
